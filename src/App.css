@@ -27,6 +27,10 @@ a {
     cursor: pointer;
 }
 
-    .btn:hover {
-        background: #666;
-    }
+.btn:hover {
+    background: #666;
+}
+
+.show{
+    display:block;
+}
