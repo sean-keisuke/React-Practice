@@ -1,14 +1,99 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import Todos from './components/Todos';
 import AddTodo from './components/AddTodo';
+import ClearTodo from './components/ClearTodo';
 import Header from './components/layout/header';
 import About from './components/pages/About';
-import uuid from "react-uuid";
+import uuid from 'react-uuid';
 
 
-class App extends Component{
+
+export function App () {     
+    let defaultTodos = [
+        {
+            id: uuid(),
+            title: 'Take out the trash',
+            completed: false
+        },
+        {
+            id: uuid(),
+            title: 'Take out the dishes',
+            completed: false
+        },
+        {
+            id: uuid(),
+            title: 'Take me out, trash',
+            completed: false
+        }
+    ]
+
+    const [todos, setTodos] = useState(defaultTodos);
+
+    const markComplete = (id) => {
+        setTodos(
+            todos.map(todo => {
+                if (todo.id === id) {
+                    todo.completed = !todo.completed
+                }
+                return todo;
+            })
+        );
+    };
+
+    const delTodo = (id) => {
+        setTodos(
+            [...todos.filter(
+                (todo) => todo.id !== id)
+            ]
+        );
+    }
+
+    const clearTodo = () => {
+        setTodos(
+            []
+        );
+    }
+
+    const addTodo = (title) => {
+        const newTodo = {
+            id: uuid(),
+            title,
+            completed: false
+        }
+
+        setTodos(
+            [newTodo, ...todos]
+        );
+    }
+
+    return (
+        <Router>
+            <div className="App">
+                <div className="container">
+                        <Header />
+                        <Route exact
+                            path="/"
+                            render={() => (
+                                <React.Fragment>
+                                    <AddTodo addTodo={addTodo} />
+                                    <ClearTodo clearTodo={clearTodo} />
+                                    <Todos
+                                        todos={todos}
+                                        markComplete={markComplete}
+                                        delTodo={delTodo} />
+                                </React.Fragment>
+                            )} />
+                        <Route path="/about" component={About} />
+                    </div>
+                </div>
+            </Router>
+    );
+}  
+
+/*
+class App2 extends Component{
     state = {
         todos: [
             {
@@ -84,5 +169,6 @@ class App extends Component{
         );
     }  
 }
+*/
 
 export default App;

@@ -1,11 +1,57 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useState } from 'react';
 
-export class AddTodo extends Component {
+/**
+ * @param {Object} props
+ * @param {(title: string) => undefined } props.addTodo 
+ */
+function AddTodo (props) {
+    
+    //hooks
+    const [title, setTitle] = useState('');
+
+    const {
+        addTodo
+    } = props;
+
+    const onChange = (e) => {
+        //e.persist();
+        //console.log(e);
+        setTitle(e.target.value);
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        addTodo(title);
+        setTitle('');
+    }
+
+    return (
+        <form onSubmit={onSubmit} style={{ display: 'flex' }}>
+            <input
+                type="text"
+                style={{ flex: '10', padding: '5px' }}
+                placeholder="Add Todo ..."
+                value={title}
+                onChange={(e) => onChange(e)}
+            />
+            <input
+                type="submit"
+                value="Submit"
+                className="btn"
+                style={{ flex: '1' }}
+            />
+        </form>
+    )
+
+}
+/*
+export class AddTodo2 extends Component {
     state = {
         title: ''
     }
 
-    onChange = (e) => this.setState({ [e.target.name]: e.target.value});
+    onChange = (e) => this.setState({[e.target.name]: e.target.value});
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -35,5 +81,6 @@ export class AddTodo extends Component {
         )
     }
 }
+*/
 
 export default AddTodo;
