@@ -68,6 +68,17 @@ export function App () {
         );
     }
 
+    const editTodo = (id, newTitle) => {
+        setTodos(
+            todos.map(todo => {
+                if (todo.id === id) {
+                    todo.title = newTitle
+                }
+                return todo;
+            })
+        );
+    };
+
     return (
         <Router>
             <div className="App">
@@ -82,6 +93,7 @@ export function App () {
                                     <Todos
                                         todos={todos}
                                         markComplete={markComplete}
+                                        editTodo={editTodo}
                                         delTodo={delTodo} />
                                 </React.Fragment>
                             )} />

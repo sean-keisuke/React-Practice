@@ -14,18 +14,20 @@ export function Todoitem (props) {
 
     const { id, title } = props.todo 
     
+    const newTitle = 'test' //make this a function call to an editor of some sort
+    
 
     return (
-        <div style={getStyle()} id={ `todoitem-${id}`  } className='todoitem' >
+        <div style={getStyle()} id={`todoitem-${id}`} className='todoitem'>
             <p>
                 <input type="checkbox" onChange={props.markComplete.bind(this, id )}/> {' '}
                 {title}
                 <button onClick={props.delTodo.bind(this, id)} style={btnStyle}>x</button>
+                <button onClick={props.editTodo.bind(this, id, newTitle)}  style={btnStyle2}>Edit Item</button>
             </p>
         </div>
-    )
+    ) 
 }
-
 
 
 Todoitem.propTypes = {
@@ -42,5 +44,13 @@ const btnStyle = {
     float: 'right'
 }
 
+const btnStyle2 = {
+    background: '#555555',
+    color: '#fff',
+    padding: '2px 3px',
+    cursor: 'pointer',
+    float: 'right',
+    marginRight: '10px'
+}
 
 export default Todoitem
