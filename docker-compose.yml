@@ -2,10 +2,15 @@ version: '3.4'
 services:
   react:
     build: ./
+    # react-scripts version 3.4.1 has an issue where you need tty 
+    # https://github.com/facebook/create-react-app/issues/8688
+    tty: true
     ports:
       - "3000:3000"
     volumes:
-      - ./:/app
-      - /app/node_modules
+      - ./:/todo
+      - node_modules_vol:/todo/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=$CHOKIDAR_USEPOLLING
+volumes:
+  node_modules_vol:
