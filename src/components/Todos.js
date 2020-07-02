@@ -2,9 +2,10 @@ import React from 'react';
 import Todoitem from './Todoitem';
 import PropTypes from 'prop-types';
 
-function Todos ({ todos, markComplete, editTodo, delTodo }) {
-    console.log(todos);
-    return todos.map(
+function Todos ({ todos, markComplete, editTodo, delTodo, hide }) {
+    //console.log(todos);
+    return todos.filter((todo) => {
+        return (!hide || todo.completed === false)}).map(
         (todo) => (
             <Todoitem key={todo.id} 
             todo={todo} 

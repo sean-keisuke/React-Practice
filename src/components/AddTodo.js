@@ -17,6 +17,7 @@ function AddTodo (props) {
     const onChange = (e) => {
         //e.persist();
         //console.log(e);
+        console.log(e.target.value);
         setTitle(e.target.value);
     }
 
