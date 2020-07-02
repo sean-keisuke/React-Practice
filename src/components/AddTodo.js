@@ -17,6 +17,7 @@ function AddTodo (props) {
     const onChange = (e) => {
         //e.persist();
         //console.log(e);
+        console.log(e.target.value);
         setTitle(e.target.value);
     }
 
@@ -45,6 +46,7 @@ function AddTodo (props) {
     )
 
 }
+
 /*
 export class AddTodo2 extends Component {
     state = {

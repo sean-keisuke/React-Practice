@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import EditTodo from './EditTodo';
 
 
-export function Todoitem (props) {
+
+function Todoitem (props) {
     const getStyle = () => {
         return {
             background: '#f4f4f4',
@@ -12,20 +14,36 @@ export function Todoitem (props) {
         }
     }
 
-    const { id, title } = props.todo 
+    const { id, title, completed } = props.todo 
     
+    const [showEditor, setEditor] = useState(false); 
+    //on true, text box appears, on false no textbox
+
+    const toggleTextEditor = () => {
+        setEditor(
+          !showEditor
+        );
+    };
+    
+   //const editorComponent = (showEditor ?  <EditTodo editTodo={props.editTodo} id={id} oldTitle={title}/> : undefined);
+
 
     return (
-        <div style={getStyle()} id={ `todoitem-${id}`  } className='todoitem' >
-            <p>
-                <input type="checkbox" onChange={props.markComplete.bind(this, id )}/> {' '}
+        <div style={getStyle()} id={`todoitem-${id}`} className='todoitem'>
+            <div>
+                <input 
+                    type="checkbox" 
+                    checked={completed}
+                    onChange={props.markComplete.bind(this, id )}
+                /> {' '}
                 {title}
                 <button onClick={props.delTodo.bind(this, id)} style={btnStyle}>x</button>
-            </p>
+                <button onClick={toggleTextEditor} style={btnStyle2}>Edit Todo</button>
+                {showEditor && <EditTodo editTodo={props.editTodo} id={id} oldTitle={title}/>}
+            </div>
         </div>
-    )
+    ) 
 }
-
 
 
 Todoitem.propTypes = {
@@ -42,5 +60,13 @@ const btnStyle = {
     float: 'right'
 }
 
+const btnStyle2 = {
+    background: '#555555',
+    color: '#fff',
+    padding: '2px 3px',
+    cursor: 'pointer',
+    float: 'right',
+    marginRight: '10px'
+}
 
 export default Todoitem
