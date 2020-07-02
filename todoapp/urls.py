@@ -14,8 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.conf import settings
+from django.conf.urls import url, include
+
+# has trailing slash
+URL_PRE = r"^" + settings.API_PREFIX_URLS
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    url(URL_PRE, include('todos.urls')),
+    url(URL_PRE + r"admin/", admin.site.urls),
+
 ]

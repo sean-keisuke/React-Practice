@@ -113,8 +113,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
+# https://docs.djangoproject.com/en/1.10/howto/static-files/
+API_PREFIX_NOLEADING = "api/v1"
+API_PREFIX = "/" + API_PREFIX_NOLEADING
+API_PREFIX_URLS = API_PREFIX_NOLEADING + "/"
 
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_URL = API_PREFIX + "/static/"
