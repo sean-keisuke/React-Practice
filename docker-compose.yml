@@ -11,9 +11,9 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
   web:
-    build: .
+    build: ./backend
     volumes:
-      - .:/app
+      - ./backend:/app
     ports:
       - "8000:8000"
     depends_on:
@@ -27,6 +27,8 @@ services:
       - POSTGRES_DB=$POSTGRES_DB
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_USER=${POSTGRES_USER}
+      - SECRET_KEY=$SECRET_KEY
+      - DEBUG=$DEBUG
 
   #  nginx:
   #    build:
@@ -49,7 +51,7 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend:/todo
-      - /todo/node_modules
+      - nodemodulesdata:/todo/node_modules
     depends_on:
       - web
     environment:
@@ -57,3 +59,4 @@ services:
     stdin_open: true
 volumes:
   pgdata:
+  nodemodulesdata:

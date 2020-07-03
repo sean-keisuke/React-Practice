@@ -1,5 +1,29 @@
 ## Quick Start using Docker
 
+### Create a .env file
+
+We include this in the repo as an example file at `.env.example`, you can just copy that to `.env` as a start and then customize.
+
+```
+POSTGRES_USER=DBUSER
+POSTGRES_PASSWORD=DBPASS
+POSTGRES_DB=APPDB
+POSTGRES_PORT=5432
+CHOKIDAR_USEPOLLING=true
+SECRET_KEY=something
+DEBUG=true
+```
+
+`POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` are used the very first time you fire up the database to create an initial user and database.  After that they cannot be changed.
+
+`CHOKIDAR_USEPOLLING=true` if you are on Windows, otherwise just leave that out for Mac/Linux as it will cause lots of CPU usage.
+
+`SECRET_KEY` make whatever you want, it's used by Django.
+
+`DEBUG` is the Django debug flag and should be set to `true` in development.
+
+### Run docker compose to fire up the services
+
 First time run:
 
 `docker-compose build`
