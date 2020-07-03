@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
+import uuid from 'react-uuid';
 import Todos from '../Todos';
 import AddTodo from '../AddTodo';
 import ClearTodo from '../ClearTodo';
 import HideTodo from '../HideTodo'
-import uuid from 'react-uuid';
-
 
 export default function TodosPage() {
 

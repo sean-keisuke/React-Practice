@@ -44,6 +44,7 @@ services:
   #      - DH_SIZE=2048
   #    depends_on:
   #      - web
+  
   react:
     build:
       context: ./frontend
