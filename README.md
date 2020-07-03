@@ -2,7 +2,7 @@
 
 ### Create a .env file
 
-We include this in the repo as an example file at `.env.example`
+We include this in the repo as an example file at `.env.example`, you can just copy that to `.env` as a start and then customize.
 
 ```
 POSTGRES_USER=DBUSER
