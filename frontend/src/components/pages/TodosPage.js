@@ -1,31 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import uuid from 'react-uuid';
 import Todos from '../Todos';
 import AddTodo from '../AddTodo';
 import ClearTodo from '../ClearTodo';
-import HideTodo from '../HideTodo'
+import HideTodo from '../HideTodo';
+import Spinner from '../Spinner';
 
 export default function TodosPage() {
+    const url = "/api/v1/todos";
+    const [todos, setTodos] = useState([]);
+    const [load, setLoad] = useState(true);
 
-    let defaultTodos = [
-        {
-            id: uuid(),
-            title: 'Take out the trash',
-            completed: false
-        },
-        {
-            id: uuid(),
-            title: 'Take out the dishes',
-            completed: false
-        },
-        {
-            id: uuid(),
-            title: 'Take me out, trash',
-            completed: false
+    const hideLoader = () => {
+        setLoad(false);
+    }
+    
+    const showLoader = () => {
+        setLoad(true);
+    }
+
+    async function getDefault ()
+    { 
+        let response = await fetch(url);
+        let data = await response.json()
+        return data;
+    }
+
+    useEffect(() => {
+        async function loadData() {
+            // Update the document title using the browser API
+            showLoader();
+            try {
+                const data = await getDefault();
+                setTodos(data);
+                //hideLoader();
+            } catch (error) {
+                hideLoader();
+                console.log(error);
+            }
         }
-    ]
-
-    const [todos, setTodos] = useState(defaultTodos);
+        loadData();
+    },
+    []);
+    
 
     const markComplete = (id) => {
         setTodos(
@@ -83,10 +100,10 @@ export default function TodosPage() {
         );
     };
     
-    console.log(hide);
-
     return (
         <React.Fragment>
+            {load && <Spinner/>}
+            {!load && <div>
             <AddTodo addTodo={addTodo} />
             <HideTodo toggleHide={toggleHide} />
             <ClearTodo clearTodo={clearTodo} />
@@ -96,6 +113,7 @@ export default function TodosPage() {
                 editTodo={editTodo}
                 delTodo={delTodo} 
                 hide={hide}/>
+            </div>}
         </React.Fragment>
     )
 }
