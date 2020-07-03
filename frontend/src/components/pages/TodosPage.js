@@ -33,7 +33,7 @@ export default function TodosPage() {
             try {
                 const data = await getDefault();
                 setTodos(data);
-                //hideLoader();
+                hideLoader();
             } catch (error) {
                 hideLoader();
                 console.log(error);
