@@ -32,7 +32,7 @@ function AddTodo (props) {
             <input
                 type="text"
                 style={{ flex: '10', padding: '5px' }}
-                placeholder="Add Todo ..."
+                placeholder="Add Todo..."
                 value={title}
                 onChange={(e) => onChange(e)}
             />

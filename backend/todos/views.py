@@ -29,5 +29,10 @@ class TodosView(APIView):
                     "title": "Take me out, trash", 
                     "completed": False
                 },
+                {
+                    "id": uuid.uuid4(), 
+                    "title": "Take the trash out again",
+                    "completed": False
+                },
             ]
         )

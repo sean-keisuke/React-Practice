@@ -5,6 +5,7 @@ import AddTodo from '../AddTodo';
 import ClearTodo from '../ClearTodo';
 import HideTodo from '../HideTodo';
 import Spinner from '../Spinner';
+import SearchTodo from '../SearchTodo';
 
 export default function TodosPage() {
     const url = "/api/v1/todos";
@@ -99,7 +100,23 @@ export default function TodosPage() {
           !hide
         );
     };
-    
+
+    const [search, setSearch] = useState(false);
+
+    const toggleSearch = () => {
+        setSearch(
+            !search
+        );
+    }
+
+    const [searchTitle, setSearchTitle] = useState('');
+
+    const getSearchResults = (title) => {
+        setSearchTitle(
+            title
+        );
+    }
+
     return (
         <React.Fragment>
             {load && <Spinner/>}
@@ -112,7 +129,14 @@ export default function TodosPage() {
                 markComplete={markComplete}
                 editTodo={editTodo}
                 delTodo={delTodo} 
-                hide={hide}/>
+                hide={hide}
+                search={search}
+                searchTitle = {searchTitle}
+            />
+            <SearchTodo 
+                toggleSearch={toggleSearch}
+                getSearchResults={getSearchResults}
+            />
             </div>}
         </React.Fragment>
     )

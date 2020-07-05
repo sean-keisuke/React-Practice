@@ -9,6 +9,7 @@ RUN chmod +r /todo/package-lock.json
 
 RUN npm install
 
+
 COPY . /todo
 
 # CMD exec /bin/sh -c "trap : TERM INT; (while true; do sleep 1000; done) & wait"
