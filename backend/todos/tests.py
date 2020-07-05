@@ -1,6 +1,8 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 from uuid import UUID
+from django.db import models
+from todos.models import Todos
 
 class TodosTests(APITestCase):
     def test_get_todos(self):
@@ -19,3 +21,24 @@ class TodosTests(APITestCase):
         expectedTitle = response.data[0]['title']
         self.assertEqual('Take out the trash', expectedTitle)
         print(response.content)
+    
+    def test_todo_model(self):
+        #adding todos
+        todoTitles=["test1", "test2","test3","test4","test5"]
+        for title in todoTitles:
+            tempTodo = Todos.objects.create(title=title)   
+        print(Todos.objects.values_list('title'))
+        print('\n')
+
+        #editing todos
+        temp = Todos.objects.get(title="test3")
+        temp.title = "Edit 1"
+        temp.save()
+        print(Todos.objects.values_list('title'))
+        print('\n')
+
+        #deleting todos
+        temp = Todos.objects.get(title="test2")
+        temp.delete()
+        print(Todos.objects.values_list('title'))
+        print('\n')
