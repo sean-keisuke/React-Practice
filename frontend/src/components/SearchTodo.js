@@ -5,9 +5,6 @@ function SearchTodo (props) {
     const [title, setTitle] = useState('');
 
     const onChange = (e) => {
-        //e.persist();
-        //console.log(e);
-        //console.log(e.target.value);
         props.getSearchResults(e.target.value);
         setTitle(e.target.value);
     }
@@ -24,7 +21,7 @@ function SearchTodo (props) {
             <input 
                 type="checkbox"
                 onChange={props.toggleSearch}
-            /> Search for Keywords?
+            /> Check to Filter...
         </div> 
     )
 }
