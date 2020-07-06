@@ -2,14 +2,19 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from uuid import UUID
 from django.db import models
-from todos.models import Todos
+from todos.models import Todo
 
 class TodosTests(APITestCase):
     def test_get_todos(self):
         """
         Ensure we can get todos
         """
-        response = self.client.get("/api/v1/todos", format='json')
+        #adding todos
+        todoTitles=["test1", "test2","test3","test4","test5"]
+        for title in todoTitles:
+            tempTodo = Todo.objects.create(title=title)   
+
+        response = self.client.get("/api/v1/todos/", format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         
 
@@ -19,26 +24,29 @@ class TodosTests(APITestCase):
 
 
         expectedTitle = response.data[0]['title']
-        self.assertEqual('Take out the trash', expectedTitle)
-        print(response.content)
+        self.assertEqual('test1', expectedTitle)
+        print(response.data)
     
     def test_todo_model(self):
+        """
+        Test the database model
+        """
         #adding todos
         todoTitles=["test1", "test2","test3","test4","test5"]
         for title in todoTitles:
-            tempTodo = Todos.objects.create(title=title)   
-        print(Todos.objects.values_list('title'))
+            tempTodo = Todo.objects.create(title=title)   
+        print(Todo.objects.values_list('title'))
         print('\n')
 
         #editing todos
-        temp = Todos.objects.get(title="test3")
+        temp = Todo.objects.get(title="test3")
         temp.title = "Edit 1"
         temp.save()
-        print(Todos.objects.values_list('title'))
+        print(Todo.objects.values_list('title'))
         print('\n')
 
         #deleting todos
-        temp = Todos.objects.get(title="test2")
+        temp = Todo.objects.get(title="test2")
         temp.delete()
-        print(Todos.objects.values_list('title'))
+        print(Todo.objects.values_list('title'))
         print('\n')
