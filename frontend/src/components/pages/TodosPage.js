@@ -9,7 +9,9 @@ import SearchTodo from '../SearchTodo';
 
 export default function TodosPage() {
     const url = "/api/v1/todos/";
-    const [todos, setTodos] = useState([]);
+    const [todos, setTodos] = useState([]); 
+
+    //LOADERS
     const [load, setLoad] = useState(true);
 
     const hideLoader = () => {
@@ -20,6 +22,7 @@ export default function TodosPage() {
         setLoad(true);
     }
 
+    //GET request
     async function getDefault ()
     { 
         let response = await fetch(url);
@@ -27,6 +30,7 @@ export default function TodosPage() {
         return data;
     }
 
+    //POST request
     async function postDefault(newTodo)
     {
         let response = await fetch(url, {
@@ -41,8 +45,9 @@ export default function TodosPage() {
         return data;
     }
 
-    async function putDefault(updateTodo) {
-        let response = await fetch(url, {
+    //PUT request
+    async function putDefault(updateTodo, id) {
+        let response = await fetch(url+id+"/", {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json;charset=utf-8'
@@ -54,6 +59,7 @@ export default function TodosPage() {
         return data;
     }
 
+    //GET json objects
     useEffect(() => {
         async function loadData() {
             // Update the document title using the browser API
@@ -71,19 +77,23 @@ export default function TodosPage() {
     },
     []);
     
-
+    //find todo by id, change complete state, then PUT
     const markComplete = (id) => {
         //create json object for put and call put method
+        const update = todos.map(todo => {
+            if (todo.id === id) {
+                todo.completed = !todo.completed
+                putDefault(todo, id)
+            }
+            return todo;
+        })
+        //console.log(update);
         setTodos(
-            todos.map(todo => {
-                if (todo.id === id) {
-                    todo.completed = !todo.completed
-                }
-                return todo;
-            })
+            update
         );
     };
 
+    //find todo by id, DELETE 
     const delTodo = (id) => {
         //call delete here
         setTodos(
@@ -93,15 +103,17 @@ export default function TodosPage() {
         );
     }
 
+    //clear the whole list
     const clearTodo = () => {
         setTodos(
             []
         );
     }
 
+    //add a singular todo, post it onto backend
     const addTodo = (title) => {
         const newTodo = {
-            id: uuid(),
+            id: uuid,
             title,
             completed: false
         }
@@ -113,14 +125,18 @@ export default function TodosPage() {
         );
     }
 
+    //find a todo by id, edit the name and PUT
     const editTodo = (id, newTitle) => {
+        const update = todos.map(todo => {
+            if (todo.id === id) {
+                todo.title = newTitle
+                putDefault(todo, id)
+            }
+            return todo;
+        });
+
         setTodos(
-            todos.map(todo => {
-                if (todo.id === id) {
-                    todo.title = newTitle
-                }
-                return todo;
-            })
+            update
         );
     };
 
