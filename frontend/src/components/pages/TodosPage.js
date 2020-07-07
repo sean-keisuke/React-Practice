@@ -155,14 +155,6 @@ export default function TodosPage() {
         );
     };
 
-    const [search, setSearch] = useState(false);
-
-    const toggleSearch = () => {
-        setSearch(
-            !search
-        );
-    }
-
     const [searchTitle, setSearchTitle] = useState('');
 
     const getSearchResults = (title) => {
@@ -184,11 +176,9 @@ export default function TodosPage() {
                 editTodo={editTodo}
                 delTodo={delTodo} 
                 hide={hide}
-                search={search}
                 searchTitle = {searchTitle}
             />
             <SearchTodo 
-                toggleSearch={toggleSearch}
                 getSearchResults={getSearchResults}
             />
             </div>}

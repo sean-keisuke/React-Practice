@@ -18,10 +18,6 @@ function SearchTodo (props) {
                 value={title}
                 onChange={(e) => onChange(e)}
             />
-            <input 
-                type="checkbox"
-                onChange={props.toggleSearch}
-            /> Check to Filter...
         </div> 
     )
 }
