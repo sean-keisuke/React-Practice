@@ -19,14 +19,10 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserSerializer()
 
 class TodosView(viewsets.ModelViewSet):
-    """
-    This viewset automatically provides `list`, `create`, `retrieve`,
-    `update` and `destroy` actions.
-
-    Additionally we also provide an extra `highlight` action.
-    """
     queryset  = Todo.objects.all()
     serializer_class = TodoSerializer
+
+    """
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
@@ -36,39 +32,4 @@ class TodosView(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-
-
-
-
-
-
-"""
-class TodosViewOld(APIView):
-    # renderer_classes
-
-    def get(self, request, format=None):
-        return Response(
-            [
-                {
-                    "id": uuid.uuid4(), 
-                    "title": "Take out the trash", 
-                    "completed": False
-                },
-                {
-                    "id": uuid.uuid4(),
-                    "title": "Take out the dishes",
-                    "completed": False,
-                },
-                {
-                    "id": uuid.uuid4(), 
-                    "title": "Take me out, trash", 
-                    "completed": False
-                },
-                {
-                    "id": uuid.uuid4(), 
-                    "title": "Take the trash out again",
-                    "completed": False
-                },
-            ]
-        )
-"""
+    """

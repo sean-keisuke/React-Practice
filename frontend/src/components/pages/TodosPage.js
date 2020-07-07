@@ -8,7 +8,7 @@ import Spinner from '../Spinner';
 import SearchTodo from '../SearchTodo';
 
 export default function TodosPage() {
-    const url = "/api/v1/todos";
+    const url = "/api/v1/todos/";
     const [todos, setTodos] = useState([]);
     const [load, setLoad] = useState(true);
 
@@ -23,6 +23,33 @@ export default function TodosPage() {
     async function getDefault ()
     { 
         let response = await fetch(url);
+        let data = await response.json()
+        return data;
+    }
+
+    async function postDefault(newTodo)
+    {
+        let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(newTodo)
+          });
+        console.log(response.status)  
+        let data = await response.json()
+        return data;
+    }
+
+    async function putDefault(updateTodo) {
+        let response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(updateTodo)
+          });
+        console.log(response.status)  
         let data = await response.json()
         return data;
     }
@@ -46,6 +73,7 @@ export default function TodosPage() {
     
 
     const markComplete = (id) => {
+        //create json object for put and call put method
         setTodos(
             todos.map(todo => {
                 if (todo.id === id) {
@@ -57,6 +85,7 @@ export default function TodosPage() {
     };
 
     const delTodo = (id) => {
+        //call delete here
         setTodos(
             [...todos.filter(
                 (todo) => todo.id !== id)
@@ -77,6 +106,8 @@ export default function TodosPage() {
             completed: false
         }
 
+        postDefault(newTodo);
+        
         setTodos(
             [newTodo, ...todos]
         );
