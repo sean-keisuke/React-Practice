@@ -85,17 +85,19 @@ export default function TodosPage() {
     []);
     
     //find todo by id, change complete state, then PUT
-    const markComplete = (id) => {
+    const markComplete = async (id) => {
         //create json object for put and call put method
+        let uTodo = null;
         const update = todos.map(todo => {
             if (todo.id === id) {
                 todo.completed = !todo.completed
-                putDefault(todo, id)
+                uTodo = todo;
             }
             return todo;
         })
         //console.log(update);
         setTodos(update);
+        await putDefault(uTodo, uTodo.id)
     };
 
     //find todo by id, DELETE 
@@ -134,15 +136,17 @@ export default function TodosPage() {
     }
 
     //find a todo by id, edit the name and PUT
-    const editTodo = (id, newTitle) => {
+    const editTodo = async (id, newTitle) => {
+        let uTodo = null;
         const update = todos.map(todo => {
             if (todo.id === id) {
                 todo.title = newTitle
-                putDefault(todo, id)
+                uTodo = todo
             }
             return todo;
         });
         setTodos(update);
+        await putDefault(uTodo, uTodo.id)
     };
 
     const [hide, setHide] = useState(false); 
