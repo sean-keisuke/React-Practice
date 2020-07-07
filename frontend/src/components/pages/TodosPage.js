@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import uuid from 'react-uuid';
 import Todos from '../Todos';
 import AddTodo from '../AddTodo';
 import ClearTodo from '../ClearTodo';
@@ -47,7 +46,6 @@ export default function TodosPage() {
 
     //PUT request
     async function putDefault(updateTodo, id) {
-        console.log(id)
         let response = await fetch(url+id+"/", {
             method: 'PUT',
             headers: {
@@ -101,35 +99,35 @@ export default function TodosPage() {
     };
 
     //find todo by id, DELETE 
-    const delTodo = (id) => {
+    const delTodo = async(id) => {
         //call delete here
-        deleteDefault(id);
         setTodos(
             [...todos.filter(
                 (todo) => todo.id !== id)
             ]
         );
+        await deleteDefault(id);
     }
 
     //clear the whole list
-    const clearTodo = () => {
-        for(let i = 0; i < todos.length; i++)
-        {
-            deleteDefault(todos[i].id);
-        }
+    const clearTodo = async () => {
         setTodos(
             []
         );
+        //clear the database
+        for(let i = 0; i < todos.length; i++)
+        {
+            await deleteDefault(todos[i].id);
+        }
     }
 
     //add a singular todo, post it onto backend
-    const addTodo = (title) => {
-        const newTodo = {
-            id: uuid(),
+    const addTodo = async (title) => {
+        const myNewTodo = {
             title,
             completed: false
         }
-        postDefault(newTodo); 
+        const newTodo = await postDefault(myNewTodo); 
         setTodos(
             [newTodo, ...todos]
         );
