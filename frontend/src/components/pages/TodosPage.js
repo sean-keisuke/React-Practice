@@ -39,7 +39,7 @@ export default function TodosPage() {
               'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify(newTodo)
-          });
+        });
         console.log(response.status)  
         let data = await response.json()
         return data;
@@ -47,16 +47,25 @@ export default function TodosPage() {
 
     //PUT request
     async function putDefault(updateTodo, id) {
+        console.log(id)
         let response = await fetch(url+id+"/", {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify(updateTodo)
-          });
+        });
         console.log(response.status)  
         let data = await response.json()
         return data;
+    }
+
+    //DELETE request
+    async function deleteDefault(id) {
+        let response = await fetch(url+id+"/", {
+            method: 'DELETE',
+        });
+        console.log(response.status)  
     }
 
     //GET json objects
@@ -88,14 +97,13 @@ export default function TodosPage() {
             return todo;
         })
         //console.log(update);
-        setTodos(
-            update
-        );
+        setTodos(update);
     };
 
     //find todo by id, DELETE 
     const delTodo = (id) => {
         //call delete here
+        deleteDefault(id);
         setTodos(
             [...todos.filter(
                 (todo) => todo.id !== id)
@@ -105,6 +113,10 @@ export default function TodosPage() {
 
     //clear the whole list
     const clearTodo = () => {
+        for(let i = 0; i < todos.length; i++)
+        {
+            deleteDefault(todos[i].id);
+        }
         setTodos(
             []
         );
@@ -113,13 +125,11 @@ export default function TodosPage() {
     //add a singular todo, post it onto backend
     const addTodo = (title) => {
         const newTodo = {
-            id: uuid,
+            id: uuid(),
             title,
             completed: false
         }
-
-        postDefault(newTodo);
-        
+        postDefault(newTodo); 
         setTodos(
             [newTodo, ...todos]
         );
@@ -134,10 +144,7 @@ export default function TodosPage() {
             }
             return todo;
         });
-
-        setTodos(
-            update
-        );
+        setTodos(update);
     };
 
     const [hide, setHide] = useState(false); 
