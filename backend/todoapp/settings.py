@@ -81,6 +81,15 @@ DATABASES = {
     }
 }
 
+DATABASES["default"] = {
+    "ENGINE": os.environ.get("db_engine", "django.contrib.gis.db.backends.postgis"),
+    "NAME": os.environ.get("db_name"),
+    "USER": os.environ.get("db_user"),
+    "PASSWORD": os.environ.get("db_password"),
+    "HOST": os.environ.get("db_host", "db"),
+    "PORT": os.environ.get("db_port", "5432"),
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
