@@ -50,3 +50,46 @@ class TodosTests(APITestCase):
         temp.delete()
         print(Todo.objects.values_list('title'))
         print('\n')
+    
+    def test_get_single_todo(self):
+        Todo.objects.create(title="single todo", id=50) 
+        id = 50
+
+        response = self.client.get("/api/v1/todos/" + str(id) + "/", format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Todo.objects.count(), 1)
+        self.assertEqual(Todo.objects.get().title, 'single todo')
+
+    def test_create_todos(self):
+        url = "/api/v1/todos/"
+        data = {'title': 'test_create_todos'}
+
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Todo.objects.count(), 1)
+        self.assertEqual(Todo.objects.get().title, 'test_create_todos')
+        self.assertEqual(Todo.objects.get().id, response.data['id'])
+
+
+    def test_update_todos(self):
+        Todo.objects.create(title="test", id=52) 
+        id = 52
+        data = {'title': 'test_update_todos'}
+        response = self.client.put("/api/v1/todos/" + str(id) + "/", data, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Todo.objects.count(), 1)
+        self.assertEqual(Todo.objects.get().title, 'test_update_todos')
+        self.assertEqual(Todo.objects.get().id, response.data['id'])
+
+
+    def test_delete_todos(self):
+        Todo.objects.create(title="delete_todo", id=53) 
+        id = 53
+
+        response = self.client.delete("/api/v1/todos/" + str(id) + "/", format="json")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Todo.objects.count(), 0)
+        with self.assertRaises(Todo.DoesNotExist):
+            Todo.objects.get().id
+        
