@@ -25,7 +25,7 @@ class TodosTests(APITestCase):
 
         expectedTitle = response.data[0]['title']
         self.assertEqual('test1', expectedTitle)
-        print(response.data)
+        #print(response.data)
     
     def test_todo_model(self):
         """
@@ -35,21 +35,21 @@ class TodosTests(APITestCase):
         todoTitles=["test1", "test2","test3","test4","test5"]
         for title in todoTitles:
             tempTodo = Todo.objects.create(title=title)   
-        print(Todo.objects.values_list('title'))
-        print('\n')
+        #print(Todo.objects.values_list('title'))
+        #print('\n')
 
         #editing todos
         temp = Todo.objects.get(title="test3")
         temp.title = "Edit 1"
         temp.save()
-        print(Todo.objects.values_list('title'))
-        print('\n')
+        #print(Todo.objects.values_list('title'))
+        #print('\n')
 
         #deleting todos
         temp = Todo.objects.get(title="test2")
         temp.delete()
-        print(Todo.objects.values_list('title'))
-        print('\n')
+        #print(Todo.objects.values_list('title'))
+        #print('\n')
     
     def test_get_single_todo(self):
         Todo.objects.create(title="single todo", id=50) 
@@ -59,6 +59,8 @@ class TodosTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Todo.objects.count(), 1)
         self.assertEqual(Todo.objects.get().title, 'single todo')
+        expected_title='single todo'
+        self.assertEqual(expected_title, response.data["title"])
 
     def test_create_todos(self):
         url = "/api/v1/todos/"
@@ -69,19 +71,24 @@ class TodosTests(APITestCase):
         self.assertEqual(Todo.objects.count(), 1)
         self.assertEqual(Todo.objects.get().title, 'test_create_todos')
         self.assertEqual(Todo.objects.get().id, response.data['id'])
+        expected_title='test_create_todos'
+        self.assertEqual(expected_title, response.data["title"])
 
 
     def test_update_todos(self):
         Todo.objects.create(title="test", id=52) 
         id = 52
-        data = {'title': 'test_update_todos'}
+        data = {'title': 'test_update_todos', 'completed': 'true'}
         response = self.client.put("/api/v1/todos/" + str(id) + "/", data, format="json")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Todo.objects.count(), 1)
         self.assertEqual(Todo.objects.get().title, 'test_update_todos')
         self.assertEqual(Todo.objects.get().id, response.data['id'])
-
+        expected_title='test_update_todos'
+        self.assertEqual(expected_title, response.data["title"])
+        self.assertEqual(True, response.data["completed"])
+        
 
     def test_delete_todos(self):
         Todo.objects.create(title="delete_todo", id=53) 
