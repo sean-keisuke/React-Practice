@@ -14,8 +14,20 @@ function Todoitem (props) {
         }
     }
 
-    const { id, title, completed } = props.todo 
-    
+    const { id, title, completed, project } = props.todo 
+    const {projects} = props; //list of projects
+    //console.log(project)
+    //console.log(projects)
+
+    const getTitle = projects.map((pro) => {
+        let retTitle = null;
+        if(pro.id === project)
+        {
+            retTitle = pro.name
+        }
+        return retTitle;
+    });
+
     const [showEditor, setEditor] = useState(false); 
     //on true, text box appears, on false no textbox
 
@@ -34,6 +46,7 @@ function Todoitem (props) {
                     onChange={props.markComplete.bind(this, id )}
                 /> {' '}
                 {title}
+                <sup style={projectStyle}>    Project: {getTitle}</sup>
                 <button onClick={props.delTodo.bind(this, id)} style={btnStyle}>x</button>
                 <button onClick={toggleTextEditor} style={btnStyle2}>Edit Todo</button>
                 {showEditor && <EditTodo editTodo={props.editTodo} id={id} oldTitle={title}/>}
@@ -45,6 +58,12 @@ function Todoitem (props) {
 
 Todoitem.propTypes = {
     todo: PropTypes.object.isRequired
+}
+
+const projectStyle = {
+    color: '#f00',
+    font: '10px Arial, sans-serif',
+    'marginleft': '2.5em'
 }
 
 const btnStyle = {

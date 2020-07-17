@@ -2,8 +2,8 @@ import React from 'react';
 import Todoitem from './Todoitem';
 import PropTypes from 'prop-types';
 
-function Todos ({ todos, markComplete, editTodo, delTodo, hide, searchTitle, projectFilter, projectId }) {
-    //console.log(searchTitle);
+function Todos ({ todos, markComplete, editTodo, delTodo, hide, searchTitle, projectFilter, projectId, projects }) {
+    //console.log(project.name)
     return todos.filter((todo) => {
         return (
             (!hide || todo.completed === false) 
@@ -18,6 +18,7 @@ function Todos ({ todos, markComplete, editTodo, delTodo, hide, searchTitle, pro
                 markComplete={markComplete} 
                 editTodo={editTodo}
                 delTodo={delTodo} 
+                projects={projects}
             />    
         )
     );

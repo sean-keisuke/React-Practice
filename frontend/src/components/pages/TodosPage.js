@@ -163,11 +163,13 @@ export default function TodosPage() {
     };
 
     const [projectFilter, setProjectFilter] = useState(false)
-    const [projectId, setProjectId] = useState(0)
+    const [projectId, setProjectId] = useState({})
     const toggleProjectFilter = (id) => {
         setProjectFilter(!projectFilter);
+        //console.log(id)
         setProjectId(id);
     }
+    
 
 
     const [hide, setHide] = useState(false); 
@@ -207,6 +209,7 @@ export default function TodosPage() {
                 searchTitle = {searchTitle}
                 projectFilter = {projectFilter}
                 projectId = {projectId}
+                projects = {projects}
             />
             <SearchTodo 
                 getSearchResults={getSearchResults}
