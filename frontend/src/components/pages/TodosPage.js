@@ -137,10 +137,12 @@ export default function TodosPage() {
     }
 
     //add a singular todo, post it onto backend
-    const addTodo = async (title) => {
+    const addTodo = async (title, project) => {
+        //console.log(project)
         const myNewTodo = {
             title,
-            completed: false
+            completed: false,
+            project: project
         }
         const newTodo = await postTodos(myNewTodo); 
         setTodos(
@@ -197,7 +199,10 @@ export default function TodosPage() {
                 projects={projects}
                 toggleProjectFilter={toggleProjectFilter}
             />
-            <AddTodo addTodo={addTodo} />
+            <AddTodo 
+                addTodo={addTodo} 
+                projects={projects}
+            />
             <HideTodo toggleHide={toggleHide} />
             <ClearTodo clearTodo={clearTodo} />
             <Todos

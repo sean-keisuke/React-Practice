@@ -9,9 +9,11 @@ function AddTodo (props) {
     
     //hooks
     const [title, setTitle] = useState('');
+    const [project, setProject] = useState(1);
 
     const {
-        addTodo
+        addTodo,
+        projects
     } = props;
 
     const onChange = (e) => {
@@ -23,8 +25,14 @@ function AddTodo (props) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        addTodo(title);
+        //console.log(project)
+        addTodo(title, project);
         setTitle('');
+    }
+    
+    const changeProject = (e) => {
+        //console.log(e)
+        setProject(e)
     }
 
     return (
@@ -36,6 +44,16 @@ function AddTodo (props) {
                 value={title}
                 onChange={(e) => onChange(e)}
             />
+            <div style={{ padding:'10px' }}>
+                <label>Choose Project: </label>
+                <select id="projects" onChange={(e) => changeProject(e.target.value)}>
+                    {projects.map((project) => (
+                        <option value={project.id} key={project.id}> 
+                            {project.name} 
+                        </option>
+                    ))}
+                </select>
+            </div>
             <input
                 type="submit"
                 value="Submit"

@@ -11,7 +11,6 @@ function PickProject({projects, toggleProjectFilter}) {
                     </option>
                 ))}
             </select>
-            
         </div>
     );
 };
