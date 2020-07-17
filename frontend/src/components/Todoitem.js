@@ -24,9 +24,6 @@ function Todoitem (props) {
           !showEditor
         );
     };
-    
-   //const editorComponent = (showEditor ?  <EditTodo editTodo={props.editTodo} id={id} oldTitle={title}/> : undefined);
-
 
     return (
         <div style={getStyle()} id={`todoitem-${id}`} className='todoitem'>

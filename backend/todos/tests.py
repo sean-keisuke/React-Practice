@@ -61,6 +61,7 @@ class TodosTests(APITestCase):
         self.assertEqual(Todo.objects.get().title, 'single todo')
         expected_title='single todo'
         self.assertEqual(expected_title, response.data["title"])
+        self.assertEqual(False, response.data["completed"])
 
     def test_create_todos(self):
         url = "/api/v1/todos/"
@@ -71,6 +72,7 @@ class TodosTests(APITestCase):
         self.assertEqual(Todo.objects.count(), 1)
         self.assertEqual(Todo.objects.get().title, 'test_create_todos')
         self.assertEqual(Todo.objects.get().id, response.data['id'])
+        self.assertEqual(False, response.data["completed"])
         expected_title='test_create_todos'
         self.assertEqual(expected_title, response.data["title"])
 

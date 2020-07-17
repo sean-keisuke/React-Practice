@@ -31,7 +31,7 @@ function AddTodo (props) {
         <form onSubmit={onSubmit} style={{ display: 'flex' }}>
             <input
                 type="text"
-                style={{ flex: '10', padding: '5px' }}
+                style={{ flex: '20', padding: '10px' }}
                 placeholder="Add Todo..."
                 value={title}
                 onChange={(e) => onChange(e)}

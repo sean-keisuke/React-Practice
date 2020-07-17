@@ -1,22 +1,21 @@
 from django.shortcuts import render
-
-# Create your views here.
 from django.http import HttpResponse
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status, viewsets, renderers, permissions
 from rest_framework.decorators import action
-from todos.serializers import TodoSerializer, UserSerializer
-from todos.models import Todo
+from todos.serializers import TodoSerializer, UserSerializer, ProjectSerializer
+from todos.models import Todo, Project
 import uuid
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    This viewset automatically provides `list` and `detail` actions.
-    """
     queryset = Todo.objects.all()
     serializer_class = UserSerializer()
+
+class ProjectView(viewsets.ModelViewSet):
+    queryset  = Project.objects.all()
+    serializer_class = ProjectSerializer
 
 class TodosView(viewsets.ModelViewSet):
     queryset  = Todo.objects.all()

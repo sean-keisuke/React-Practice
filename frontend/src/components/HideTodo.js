@@ -4,8 +4,7 @@ function HideTodo (props) {
     return (
         <div>
             <input 
-                type="checkbox"
-                
+                type="checkbox" 
                 onChange={props.toggleHide}
             /> Hide Completed Todos?
         </div> 

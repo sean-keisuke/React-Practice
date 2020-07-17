@@ -2,19 +2,23 @@ import React from 'react';
 import Todoitem from './Todoitem';
 import PropTypes from 'prop-types';
 
-function Todos ({ todos, markComplete, editTodo, delTodo, hide, searchTitle }) {
+function Todos ({ todos, markComplete, editTodo, delTodo, hide, searchTitle, projectFilter, projectId }) {
     //console.log(searchTitle);
     return todos.filter((todo) => {
         return (
-            (!hide || todo.completed === false) && todo.title.toLowerCase().includes(searchTitle.toLowerCase())
+            (!hide || todo.completed === false) 
+            && todo.title.toLowerCase().includes(searchTitle.toLowerCase())
+            && (!projectFilter || todo.project === projectId)
         )
     }).map(
         (todo) => (
-            <Todoitem key={todo.id} 
-            todo={todo} 
-            markComplete={markComplete} 
-            editTodo={editTodo}
-            delTodo={delTodo} />    
+            <Todoitem 
+                key={todo.id} 
+                todo={todo} 
+                markComplete={markComplete} 
+                editTodo={editTodo}
+                delTodo={delTodo} 
+            />    
         )
     );
 }

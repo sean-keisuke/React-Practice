@@ -5,10 +5,14 @@ import ClearTodo from '../ClearTodo';
 import HideTodo from '../HideTodo';
 import Spinner from '../Spinner';
 import SearchTodo from '../SearchTodo';
+import PickProject from '../PickProject';
 
 export default function TodosPage() {
-    const url = "/api/v1/todos/";
-    const [todos, setTodos] = useState([]); 
+    const todoUrl = "/api/v1/todos/";
+    const [todos, setTodos] = useState([]); //list of todos
+    
+    const projectUrl = "/api/v1/projects/" //PICK PROJECT
+    const [projects, setProjects] = useState([]); //list of projects
 
     //LOADERS
     const [load, setLoad] = useState(true);
@@ -21,18 +25,25 @@ export default function TodosPage() {
         setLoad(true);
     }
 
-    //GET request
-    async function getDefault ()
+    //GET request TODO
+    async function getTodos ()
     { 
-        let response = await fetch(url);
+        let response = await fetch(todoUrl);
         let data = await response.json()
         return data;
     }
 
-    //POST request
-    async function postDefault(newTodo)
+    async function getProjects () // PICK PROJECT
     {
-        let response = await fetch(url, {
+        let response = await fetch(projectUrl);
+        let data = await response.json()
+        return data;
+    }
+
+    //POST request TODO
+    async function postTodos(newTodo)
+    {
+        let response = await fetch(todoUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=utf-8'
@@ -44,9 +55,9 @@ export default function TodosPage() {
         return data;
     }
 
-    //PUT request
-    async function putDefault(updateTodo, id) {
-        let response = await fetch(url+id+"/", {
+    //PUT request TODO
+    async function putTodos(updateTodo, id) {
+        let response = await fetch(todoUrl+id+"/", {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json;charset=utf-8'
@@ -58,9 +69,9 @@ export default function TodosPage() {
         return data;
     }
 
-    //DELETE request
-    async function deleteDefault(id) {
-        let response = await fetch(url+id+"/", {
+    //DELETE request TODO
+    async function deleteTodos(id) {
+        let response = await fetch(todoUrl+id+"/", {
             method: 'DELETE',
         });
         console.log(response.status)  
@@ -72,8 +83,10 @@ export default function TodosPage() {
             // Update the document title using the browser API
             showLoader();
             try {
-                const data = await getDefault();
-                setTodos(data);
+                const todoData = await getTodos();
+                setTodos(todoData);
+                const projectData = await getProjects();
+                setProjects(projectData);
                 hideLoader();
             } catch (error) {
                 hideLoader();
@@ -97,7 +110,7 @@ export default function TodosPage() {
         })
         //console.log(update);
         setTodos(update);
-        await putDefault(uTodo, uTodo.id)
+        await putTodos(uTodo, uTodo.id)
     };
 
     //find todo by id, DELETE 
@@ -108,7 +121,7 @@ export default function TodosPage() {
                 (todo) => todo.id !== id)
             ]
         );
-        await deleteDefault(id);
+        await deleteTodos(id);
     }
 
     //clear the whole list
@@ -119,7 +132,7 @@ export default function TodosPage() {
         //clear the database
         for(let i = 0; i < todos.length; i++)
         {
-            await deleteDefault(todos[i].id);
+            await deleteTodos(todos[i].id);
         }
     }
 
@@ -129,7 +142,7 @@ export default function TodosPage() {
             title,
             completed: false
         }
-        const newTodo = await postDefault(myNewTodo); 
+        const newTodo = await postTodos(myNewTodo); 
         setTodos(
             [newTodo, ...todos]
         );
@@ -146,8 +159,16 @@ export default function TodosPage() {
             return todo;
         });
         setTodos(update);
-        await putDefault(uTodo, uTodo.id)
+        await putTodos(uTodo, uTodo.id)
     };
+
+    const [projectFilter, setProjectFilter] = useState(false)
+    const [projectId, setProjectId] = useState(0)
+    const toggleProjectFilter = (id) => {
+        setProjectFilter(!projectFilter);
+        setProjectId(id);
+    }
+
 
     const [hide, setHide] = useState(false); 
 
@@ -165,10 +186,15 @@ export default function TodosPage() {
         );
     }
 
+    //console.log(projects)
     return (
         <React.Fragment>
             {load && <Spinner/>}
             {!load && <div>
+            <PickProject 
+                projects={projects}
+                toggleProjectFilter={toggleProjectFilter}
+            />
             <AddTodo addTodo={addTodo} />
             <HideTodo toggleHide={toggleHide} />
             <ClearTodo clearTodo={clearTodo} />
@@ -179,6 +205,8 @@ export default function TodosPage() {
                 delTodo={delTodo} 
                 hide={hide}
                 searchTitle = {searchTitle}
+                projectFilter = {projectFilter}
+                projectId = {projectId}
             />
             <SearchTodo 
                 getSearchResults={getSearchResults}

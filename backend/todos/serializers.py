@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from todos.models import Todo
+from todos.models import Todo, Project
 
 class UserSerializer(serializers.Serializer):
     email = serializers.EmailField()
@@ -8,6 +8,11 @@ class UserSerializer(serializers.Serializer):
 class TodoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Todo
-        fields = ('id', 'title', 'completed')
+        fields = '__all__'
+    
 
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = '__all__'
 
