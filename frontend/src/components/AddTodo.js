@@ -42,11 +42,12 @@ function AddTodo (props) {
                 style={{ flex: '20', padding: '10px' }}
                 placeholder="Add Todo..."
                 value={title}
+                className="add-todo"
                 onChange={(e) => onChange(e)}
             />
             <div style={{ padding:'10px' }}>
                 <label>Choose Project: </label>
-                <select id="projects" onChange={(e) => changeProject(e.target.value)}>
+                <select id="add-to-projects" onChange={(e) => changeProject(e.target.value)}>
                     {projects.map((project) => (
                         <option value={project.id} key={project.id}> 
                             {project.name} 

@@ -165,14 +165,17 @@ export default function TodosPage() {
     };
 
     const [projectFilter, setProjectFilter] = useState(false)
-    const [projectId, setProjectId] = useState({})
+    const [IdtoFilter, setIdtoFilter] = useState(0)
     const toggleProjectFilter = (id) => {
-        setProjectFilter(!projectFilter);
-        //console.log(id)
-        setProjectId(id);
+        if(id === 0)
+        {
+            setProjectFilter(false);
+        }
+        else{
+            setProjectFilter(true);      
+        }
+        setIdtoFilter(id);
     }
-    
-
 
     const [hide, setHide] = useState(false); 
 
@@ -213,7 +216,7 @@ export default function TodosPage() {
                 hide={hide}
                 searchTitle = {searchTitle}
                 projectFilter = {projectFilter}
-                projectId = {projectId}
+                IdtoFilter = {IdtoFilter}
                 projects = {projects}
             />
             <SearchTodo 

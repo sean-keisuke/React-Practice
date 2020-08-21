@@ -1,26 +1,26 @@
 import React from 'react';
 import { useState } from 'react';
 
-function EditTodo (props) {
+function EditProject (props) {
 
     const {
-        editTodo,
+        editProject,
         id,
-        oldTitle,
+        oldName,
         toggleTextEditor
     } = props;
 
-    const [newTitle, setNewTitle] = useState(oldTitle);
+    const [newName, setNewName] = useState(oldName);
     
 
     const onChange = (e) => {
-        setNewTitle(e.target.value);
+        setNewName(e.target.value);
     }
 
     const onSubmit = (e) => {
         e.preventDefault();
-        editTodo(id, newTitle);
-        setNewTitle('');
+        editProject(id, newName);
+        setNewName('');
         toggleTextEditor();
     }
 
@@ -28,8 +28,8 @@ function EditTodo (props) {
         <form onSubmit={onSubmit}>
             <input
                 type="text"
-                placeholder="Set New Title"
-                value={newTitle}
+                placeholder="Set New Name"
+                value={newName}
                 onChange={(e) => onChange(e)}
             />
             <input
@@ -42,4 +42,4 @@ function EditTodo (props) {
 
 }
 
-export default EditTodo;
+export default EditProject;

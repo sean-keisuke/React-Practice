@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import EditTodo from './EditTodo';
 
-
-
 function Todoitem (props) {
     const getStyle = () => {
         return {
@@ -49,7 +47,7 @@ function Todoitem (props) {
                 <sup style={projectStyle}>    Project: {getTitle}</sup>
                 <button onClick={props.delTodo.bind(this, id)} style={btnStyle}>x</button>
                 <button onClick={toggleTextEditor} style={btnStyle2}>Edit Todo</button>
-                {showEditor && <EditTodo editTodo={props.editTodo} id={id} oldTitle={title}/>}
+                {showEditor && <EditTodo editTodo={props.editTodo} id={id} oldTitle={title} toggleTextEditor={toggleTextEditor}/>}
             </div>
         </div>
     ) 

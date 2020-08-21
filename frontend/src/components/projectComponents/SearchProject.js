@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 
-function SearchTodo (props) {
+function SearchProject (props) {
     const [title, setTitle] = useState('');
 
     const onChange = (e) => {
@@ -13,7 +13,7 @@ function SearchTodo (props) {
         <div style={inputStyle}>
             <input
                 type="text"
-                placeholder="Filter Todos..."
+                placeholder="Filter Projects..."
                 value={title}
                 onChange={(e) => onChange(e)}
             />
@@ -27,4 +27,4 @@ const inputStyle = {
     boxSizing: 'border-box'
 }
 
-export default SearchTodo;
+export default SearchProject;
