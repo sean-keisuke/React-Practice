@@ -42,11 +42,12 @@ function Todoitem (props) {
                     type="checkbox" 
                     checked={completed}
                     onChange={props.markComplete.bind(this, id )}
+                    className="complete-box"
                 /> {' '}
                 {title}
                 <sup style={projectStyle}>    Project: {getTitle}</sup>
-                <button onClick={props.delTodo.bind(this, id)} style={btnStyle}>x</button>
-                <button onClick={toggleTextEditor} style={btnStyle2}>Edit Todo</button>
+                <button onClick={props.delTodo.bind(this, id)} style={btnStyle} className="delete-btn">x</button>
+                <button onClick={toggleTextEditor} style={btnStyle2} className="toggle-edit">Edit Todo</button>
                 {showEditor && <EditTodo editTodo={props.editTodo} id={id} oldTitle={title} toggleTextEditor={toggleTextEditor}/>}
             </div>
         </div>

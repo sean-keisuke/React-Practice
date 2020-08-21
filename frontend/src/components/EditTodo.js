@@ -30,12 +30,13 @@ function EditTodo (props) {
                 type="text"
                 placeholder="Set New Title"
                 value={newTitle}
+                className="edit-text-field"
                 onChange={(e) => onChange(e)}
             />
             <input
                 type="submit"
                 value="Change"
-                className="btn"
+                className="edit-btn"
             />
         </form>
     )

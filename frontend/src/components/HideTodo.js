@@ -6,6 +6,7 @@ function HideTodo (props) {
             <input 
                 type="checkbox" 
                 onChange={props.toggleHide}
+                className="toggle-hide"
             /> Hide Completed Todos?
         </div> 
     )
