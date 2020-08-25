@@ -11,7 +11,6 @@ export default function ProjectsPage() {
     const projectUrl = "/api/v1/projects/" //PICK PROJECT
     const [projects, setProjects] = useState([]); //list of projects
 
-    console.log(projects)
     //LOADERS
     const [load, setLoad] = useState(true);
 

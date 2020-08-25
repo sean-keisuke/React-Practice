@@ -1,8 +1,16 @@
 describe ('Todo Components Test', () => {
   beforeEach(() => {
+    cy.visit('/ProjectsPage')
+    cy.contains('Clear Projects').click()
+
+    cy.get('.add-project').type('Project 2')
+    cy.get('.btn').click()
+    cy.get('.projectitem').should('have.length', 2)
+
+
     cy.visit('/')
     cy.contains('Clear List').click()
-    cy.get('.todoitem').should('have.length', 0)
+    cy.get('.todoitem').should('have.length', 0) 
   }) 
   it( 'Adding a single Todo', () => {
     cy.get('.add-todo').type('This is from Cypress!')
@@ -21,6 +29,7 @@ describe ('Todo Components Test', () => {
   })
   it('Properly Filters', () =>{
     cy.get('.add-todo').type('This is from Cypress!')
+    cy.get('#add-to-projects').select('Default')
     cy.get('.btn').click()
     
     cy.get('.add-todo').type('This is from Cypress again!')
