@@ -6,15 +6,15 @@ import { useState } from 'react';
  * @param {(title: string) => undefined } props.addTodo 
  */
 function AddTodo (props) {
-    
-    //hooks
-    const [title, setTitle] = useState('');
-    const [project, setProject] = useState(1);
-
     const {
         addTodo,
         projects
     } = props;
+        
+    //hooks
+    const [title, setTitle] = useState('');
+    const [project, setProject] = useState(projects[0].id);
+
 
     const onChange = (e) => {
         //e.persist();
@@ -23,10 +23,12 @@ function AddTodo (props) {
         setTitle(e.target.value);
     }
 
+    String.prototype.isNullOrWhiteSpace = function() { return (!this || this.length === 0 || /^\s*$/.test(this)) }
+
     const onSubmit = (e) => {
         e.preventDefault();
-        //console.log(project)
-        addTodo(title, project);
+        if(!title.isNullOrWhiteSpace())
+            addTodo(title, project);
         setTitle('');
     }
     

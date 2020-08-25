@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Todos from '../Todos';
-import AddTodo from '../AddTodo';
-import ClearTodo from '../ClearTodo';
-import HideTodo from '../HideTodo';
+import Todos from '../TodoComponents/Todos';
+import AddTodo from '../TodoComponents/AddTodo';
+import ClearTodo from '../TodoComponents/ClearTodo';
+import HideTodo from '../TodoComponents/HideTodo';
 import Spinner from '../Spinner';
-import SearchTodo from '../SearchTodo';
-import PickProject from '../PickProject';
+import SearchTodo from '../TodoComponents/SearchTodo';
+import PickProject from '../TodoComponents/PickProject';
 
 export default function TodosPage() {
     const todoUrl = "/api/v1/todos/";
@@ -126,14 +126,14 @@ export default function TodosPage() {
 
     //clear the whole list
     const clearTodo = async () => {
-        setTodos(
-            []
-        );
         //clear the database
         for(let i = 0; i < todos.length; i++)
         {
             await deleteTodos(todos[i].id);
         }
+        setTodos(
+            []
+        );
     }
 
     //add a singular todo, post it onto backend
@@ -144,6 +144,7 @@ export default function TodosPage() {
             completed: false,
             project: project
         }
+        //console.log(myNewTodo)
         const newTodo = await postTodos(myNewTodo); 
         setTodos(
             [newTodo, ...todos]

@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 
 function Projects ({ projects, editProject, delProject, searchName}) {
     return projects.filter((project) => {
-        return (project.name.toLowerCase().includes(searchName.toLowerCase()))
+        return (
+            project.name.toLowerCase().includes(searchName.toLowerCase()))
     }).map(
         (project) => (
             <Projectitem 

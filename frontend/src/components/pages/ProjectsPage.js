@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import AddProject from '../projectComponents/AddProject';
 import Spinner from '../Spinner';
 import Projects from '../projectComponents/Projects';
-import SearchProject from '../projectComponents/SearchProject.js'
+import SearchProject from '../projectComponents/SearchProject'
+import ClearProjects from '../projectComponents/ClearProjects'
 
 
 export default function ProjectsPage() {
@@ -10,6 +11,7 @@ export default function ProjectsPage() {
     const projectUrl = "/api/v1/projects/" //PICK PROJECT
     const [projects, setProjects] = useState([]); //list of projects
 
+    console.log(projects)
     //LOADERS
     const [load, setLoad] = useState(true);
 
@@ -65,6 +67,18 @@ export default function ProjectsPage() {
         console.log(response.status)  
     }
 
+    const clearProjects = async () => {
+        //clear the database
+        for(let i = 0; i < projects.length; i++)
+        {
+            await deleteProject(projects[i].id);
+        }
+        setProjects(
+            []
+        );
+        SetDefaultProjects();
+    }
+
     //GET json objects
     useEffect(() => {
         async function loadData() {
@@ -85,16 +99,19 @@ export default function ProjectsPage() {
     
     //find Project by id, DELETE 
     const delProject = async(id) => {
-        //call delete here
+        //call delete here  
         setProjects(
             [...projects.filter(
                 (project) => project.id !== id)
             ]
         );
+        if(projects.length === 1) 
+        {
+            SetDefaultProjects();
+        }
         await deleteProject(id)
     }
-
-
+    
     //add a singular Project, post it onto backend
     const addProjects = async (name) => {
         //console.log(project)
@@ -104,6 +121,17 @@ export default function ProjectsPage() {
         const newProject = await postProjects(myNewProject); 
         setProjects(
             [ ...projects, newProject]
+        );
+    }
+
+    const SetDefaultProjects = async () => {
+        //console.log(project)
+        const myNewProject = {
+            name: "Default"
+        }
+        const newProject = await postProjects(myNewProject); 
+        setProjects(
+            [newProject]
         );
     }
 
@@ -137,6 +165,7 @@ export default function ProjectsPage() {
             <AddProject 
                 addProjects={addProjects} 
             />
+            <ClearProjects clearProjects={clearProjects} />
             <Projects
                 projects={projects}
                 editProject={editProject}

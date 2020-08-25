@@ -12,14 +12,15 @@ function AddProject (props) {
     } = props;
 
     const onChange = (e) => {
-
         setTitle(e.target.value);
     }
+    
+    String.prototype.isNullOrWhiteSpace = function() { return (!this || this.length === 0 || /^\s*$/.test(this)) }
 
     const onSubmit = (e) => {
         e.preventDefault();
-        //console.log(project)
-        addProjects(title);
+        if(!title.isNullOrWhiteSpace())
+            addProjects(title);
         setTitle('');
     }
     return (

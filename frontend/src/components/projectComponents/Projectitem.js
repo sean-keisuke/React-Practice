@@ -8,7 +8,6 @@ function Projectitem (props) {
             background: '#f4f4f4',
             padding: '10px',
             boarderBottom: '1px #ccc dotted',
-            textDecoration: props.project.completed ? 'line-through' : 'none'
         }
     }
 
@@ -27,7 +26,7 @@ function Projectitem (props) {
         <div style={getStyle()} id={`projectitem-${id}`} className='projectitem'>
             <div>
                 {name}
-                <button onClick={props.delProject.bind(this, id)} style={btnStyle}>x</button>
+                <button onClick={props.delProject.bind(this, id)} style={btnStyle} className="delete-btn">x</button>
                 <button onClick={toggleTextEditor} style={btnStyle2}>Edit Project</button>
                 {showEditor && <EditProject editProject={props.editProject} id={id} oldName={name} toggleTextEditor={toggleTextEditor}/>}
             </div>
