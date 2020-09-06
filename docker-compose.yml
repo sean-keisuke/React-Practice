@@ -57,7 +57,37 @@ services:
       - web
     environment:
       - CHOKIDAR_USEPOLLING=$CHOKIDAR_USEPOLLING
+      # this next line is needed to allow e2e to work
+      - DANGEROUSLY_DISABLE_HOST_CHECK=true
     stdin_open: true
+  e2e:
+    image: cypress/included:5.1.0
+    volumes:
+      - ./frontend:/e2e
+    working_dir: /e2e
+    environment:
+      - CYPRESS_baseUrl=http://react:3000
+    depends_on:
+      - db
+      - web
+      - react
+  # this e2e open does not work yet
+  # e2e_open:
+  #   image: cypress/included:5.1.0
+  #   volumes:
+  #     - ./frontend:/e2e
+  #     - /tmp/.X11-unix:/tmp/.X11-unix
+  #   environment:
+  #     - DISPLAY=$IP:0
+  #   working_dir: /e2e
+  #   entrypoint:
+  #     - cypress
+  #   command:
+  #     - open
+  # depends_on:
+  #   - db
+  #   - web
+  #   - react  
 volumes:
   pgdata:
   nodemodulesdata:

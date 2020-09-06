@@ -69,3 +69,16 @@ which will build node_modules in your container.
 then:
 
 `docker-compose up`
+
+
+# Cypress tests in Docker
+
+If you want to open the Cypress window, we do it outside Docker.
+
+Go into the `frontend/` dir.
+
+`npm run cypress`
+
+If you want to run it more like it will in production, go back into the root of the repo:
+
+`docker-compose up e2e`
