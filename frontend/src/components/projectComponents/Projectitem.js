@@ -27,7 +27,7 @@ function Projectitem (props) {
             <div>
                 {name}
                 <button onClick={props.delProject.bind(this, id)} style={btnStyle} className="delete-btn">x</button>
-                <button onClick={toggleTextEditor} style={btnStyle2}>Edit Project</button>
+                <button onClick={toggleTextEditor} style={btnStyle2} className="toggle-edit">Edit Project</button>
                 {showEditor && <EditProject editProject={props.editProject} id={id} oldName={name} toggleTextEditor={toggleTextEditor}/>}
             </div>
         </div>
