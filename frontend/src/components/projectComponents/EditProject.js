@@ -31,11 +31,12 @@ function EditProject (props) {
                 placeholder="Set New Name"
                 value={newName}
                 onChange={(e) => onChange(e)}
+                className="edit-text-field"
             />
             <input
                 type="submit"
                 value="Change"
-                className="btn"
+                className="edit-btn"
             />
         </form>
     )
