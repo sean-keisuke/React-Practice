@@ -10,7 +10,7 @@
     "react-dom": "^16.13.1",
     "react-fontawesome": "^1.7.1",
     "react-multi-select-component": "^3.0.0",
-    "react-native": "^0.54.4",
+    "react-native": "^0.72.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-uuid": "^1.0.2",
